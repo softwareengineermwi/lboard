@@ -23,7 +23,6 @@ function init() {
       .then((res) => res.json())
       .then((json) => {
         const str = json.result
-        console.log(str)
         const slug = str.substr(13, 21)
 
         localStorage.setItem("gameID", slug)
@@ -35,12 +34,12 @@ function init() {
   const baseUrl = `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${localStorage.getItem('gameID')}/scores/`
 
   g('sub_btn').addEventListener('click', (event) => {
-    event.preventDefault();
+    event.preventDefault()
     const form = new FormData(g("_form") as HTMLFormElement)
     const formData = {}
 
     for (let pair of form.entries()) {
-      formData[pair[0]] = pair[1];
+      formData[pair[0]] = pair[1]
     }
 
     fetch(baseUrl, {
@@ -51,16 +50,16 @@ function init() {
       },
     })
       .then((response) => response.json())
-      .then((json) => console.log(json));
-  });
+      .then((json) => { })
+  })
 
   fetch(baseUrl)
     .then((response) => response.json())
     .then((json) => {
       const scores = json.result as number[]
 
-      for (let o = 0; o < scores.length; o++) {
-        const score: any = scores[o];
+      for (let o = 0; o < scores.length; o += 1) {
+        const score: any = scores[o]
         const template = document.createElement('template')
         template.innerHTML = `<tr class="table__row">
             <td class="table__cell">
@@ -73,7 +72,7 @@ function init() {
 
         g('_scores').appendChild(template.content.firstChild)
       }
-    });
+    })
 }
 
 onload = init()

@@ -18,7 +18,6 @@ function init() {
       .then((res) => res.json())
       .then((json) => {
         const str = json.result;
-        console.log(str);
         const slug = str.substr(13, 21);
         localStorage.setItem("gameID", slug);
         location.reload();
@@ -40,13 +39,13 @@ function init() {
       },
     })
       .then((response) => response.json())
-      .then((json) => console.log(json));
+      .then((json) => { });
   });
   fetch(baseUrl)
     .then((response) => response.json())
     .then((json) => {
       const scores = json.result;
-      for (let o = 0; o < scores.length; o++) {
+      for (let o = 0; o < scores.length; o += 1) {
         const score = scores[o];
         const template = document.createElement('template');
         template.innerHTML = `<tr class="table__row">
