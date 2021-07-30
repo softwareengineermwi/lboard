@@ -25,7 +25,7 @@ function init() {
         const str = json.result
         const slug = str.substr(13, 21)
 
-        localStorage.setItem("gameID", slug)
+        localStorage.setItem('gameID', slug)
 
         location.reload()
       })
@@ -35,10 +35,10 @@ function init() {
 
   g('sub_btn').addEventListener('click', (event) => {
     event.preventDefault()
-    const form = new FormData(g("_form") as HTMLFormElement)
+    const form = new FormData(g('_form') as HTMLFormElement)
     const formData = {}
 
-    for (let pair of form.entries()) {
+    for (const pair of form.entries()) {
       formData[pair[0]] = pair[1]
     }
 
@@ -50,7 +50,6 @@ function init() {
       },
     })
       .then((response) => response.json())
-      .then((json) => { })
   })
 
   fetch(baseUrl)
@@ -75,4 +74,4 @@ function init() {
     })
 }
 
-onload = init()
+init()
