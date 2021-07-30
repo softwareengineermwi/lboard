@@ -45,8 +45,7 @@ function init() {
         const slug = str.substr(13, 21);
         localStorage.setItem('gameID', slug);
       });
-  }
-  else {
+  } else {
     refresh(localStorage.getItem('gameID'));
   }
   g('sub_btn').addEventListener('click', (event) => {
