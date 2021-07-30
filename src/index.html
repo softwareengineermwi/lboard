@@ -11,96 +11,47 @@
 
 <body>
   <main class="container max-width-sm">
-    <h1 class="padding-y-sm">Leaderboard</h1>
+    <div class="grid padding-y-sm">
+      <div class="col-6">
+        <h1 class="">Leaderboard</h1>
+      </div>
+      <div class="col-6 flex justify-end"></div>
+    </div>
     <div class="container">
       <div class="grid gap-md">
         <div class="col-6">
           <div class="flex items-center padding-bottom-sm">
             <h4>Recent scores</h4>
             <div class="flex-grow">
-              <button class="btn btn--subtle btn--md">Refresh</button>
+              <button id="refresh" class="btn btn--subtle btn--md">Refresh</button>
             </div>
           </div>
 
           <table class="table table--expanded js-table width-100%" aria-label="Table Example">
-            <tbody class="table__body">
-              <tr class="table__row">
-                <td class="table__cell">
-                  Name
-                </td>
-                <td class="table__cell">
-                  100
-                </td>
-              </tr>
-              <tr class="table__row">
-                <td class="table__cell">
-                  Name
-                </td>
-                <td class="table__cell">
-                  100
-                </td>
-              </tr>
-              <tr class="table__row">
-                <td class="table__cell">
-                  Name
-                </td>
-                <td class="table__cell">
-                  100
-                </td>
-              </tr>
-              <tr class="table__row">
-                <td class="table__cell">
-                  Name
-                </td>
-                <td class="table__cell">
-                  100
-                </td>
-              </tr>
-              <tr class="table__row">
-                <td class="table__cell">
-                  Name
-                </td>
-                <td class="table__cell">
-                  100
-                </td>
-              </tr>
-              <tr class="table__row">
-                <td class="table__cell">
-                  Name
-                </td>
-                <td class="table__cell">
-                  100
-                </td>
-              </tr>
-              <tr class="table__row">
-                <td class="table__cell">
-                  Name
-                </td>
-                <td class="table__cell">
-                  100
-                </td>
-              </tr>
-            </tbody>
+            <tbody class="table__body" id="_scores"></tbody>
           </table>
         </div>
         <div class="col-6">
           <h4 class="padding-bottom-sm">Add your scores</h4>
-          <form>
+          <form id="_form">
             <div class="padding-bottom-sm">
-              <input type="text" placeholder="Your name" class="form-control width-100%">
+              <input name="user" type="text" placeholder="Your name" class="form-control width-100%">
             </div>
+
             <div class="padding-bottom-sm">
-              <input type="text" placeholder="Your score" class="form-control width-100%">
+              <input name="score" type="text" placeholder="Your score" class="form-control width-100%">
             </div>
 
             <div class="flex justify-end">
-              <button type="submit" class="btn btn--primary btn--md">Submit</button>
+              <button id="sub_btn" type="button" class="btn btn--primary btn--md">Submit</button>
             </div>
           </form>
         </div>
       </div>
     </div>
   </main>
+
+  <script src="index.js"></script>
 </body>
 
 </html>
