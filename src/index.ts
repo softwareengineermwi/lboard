@@ -64,9 +64,12 @@ function init() {
     const form = new FormData(g('_form') as HTMLFormElement)
     const formData = {}
 
-    for (const pair of form.entries()) {
-      formData[pair[0]] = pair[1]
-    }
+    const entries = form.entries()
+
+    entries.forEach((pair: [any, any]) => {
+      const [key, value] = pair
+      formData[key] = value
+    })
 
     fetch(
       `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${localStorage.getItem('gameID')}/scores/`, {

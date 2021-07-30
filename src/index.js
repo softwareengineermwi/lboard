@@ -53,9 +53,11 @@ function init() {
     event.preventDefault();
     const form = new FormData(g('_form'));
     const formData = {};
-    for (const pair of form.entries()) {
-      formData[pair[0]] = pair[1];
-    }
+    const entries = form.entries();
+    entries.forEach((pair) => {
+      const [key, value] = pair;
+      formData[key] = value;
+    });
     fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${localStorage.getItem('gameID')}/scores/`, {
       method: 'POST',
       body: JSON.stringify(formData),
@@ -67,4 +69,3 @@ function init() {
   });
 }
 init();
-//# sourceMappingURL=index.js.map
