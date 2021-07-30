@@ -13,11 +13,11 @@ function init() {
       {
         method: 'POST',
         body: JSON.stringify({
-          name: 'FooBar'
+          name: 'FooBar',
         }),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
-        }
+        },
       }
     )
       .then((res) => res.json())
