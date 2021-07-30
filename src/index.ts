@@ -2,8 +2,36 @@ function g(e: string): HTMLElement {
   return document.getElementById(e)
 }
 
+function refresh(gameID: string) {
+  const baseUrl = `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${gameID}/scores/`
+  fetch(baseUrl)
+    .then((response) => response.json())
+    .then((json) => {
+      g('_scores').innerHTML = ''
+
+      const scores = json.result as number[]
+
+      for (let o = 0; o < scores.length; o += 1) {
+        const score: any = scores[o]
+        const template = document.createElement('template')
+        template.innerHTML = `<tr class="table__row">
+            <td class="table__cell">
+              ${score.user}
+            </td>
+            <td class="table__cell">
+              ${score.score}
+            </td>
+          </tr>`
+
+        g('_scores').appendChild(template.content.firstChild)
+      }
+    })
+}
+
 g('refresh').addEventListener('click', () => {
-  location.reload()
+  if (localStorage.getItem('gameID') !== null) {
+    refresh(localStorage.getItem('gameID'))
+  }
 })
 
 function init() {
@@ -26,12 +54,10 @@ function init() {
         const slug = str.substr(13, 21)
 
         localStorage.setItem('gameID', slug)
-
-        location.reload()
       })
+  } else {
+    refresh(localStorage.getItem('gameID'))
   }
-
-  const baseUrl = `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${localStorage.getItem('gameID')}/scores/`
 
   g('sub_btn').addEventListener('click', (event) => {
     event.preventDefault()
@@ -42,7 +68,8 @@ function init() {
       formData[pair[0]] = pair[1]
     }
 
-    fetch(baseUrl, {
+    fetch(
+      `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${localStorage.getItem('gameID')}/scores/`, {
       method: 'POST',
       body: JSON.stringify(formData),
       headers: {
@@ -51,27 +78,6 @@ function init() {
     })
       .then((response) => response.json())
   })
-
-  fetch(baseUrl)
-    .then((response) => response.json())
-    .then((json) => {
-      const scores = json.result as number[]
-
-      for (let o = 0; o < scores.length; o += 1) {
-        const score: any = scores[o]
-        const template = document.createElement('template')
-        template.innerHTML = `<tr class="table__row">
-            <td class="table__cell">
-              ${score.user}
-            </td>
-            <td class="table__cell">
-              ${score.score}
-            </td>
-          </tr>`
-
-        g('_scores').appendChild(template.content.firstChild)
-      }
-    })
 }
 
 init()
