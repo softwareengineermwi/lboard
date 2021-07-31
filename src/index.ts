@@ -1,13 +1,11 @@
-function g(e: string): HTMLElement {
-  return document.getElementById(e)
-}
+const getID = (e: string): HTMLElement => document.getElementById(e)
 
-function refresh(gameID: string) {
+const refresh = async (gameID: string) => {
   const baseUrl = `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${gameID}/scores/`
-  fetch(baseUrl)
+  await fetch(baseUrl)
     .then((response) => response.json())
     .then((json) => {
-      g('_scores').innerHTML = ''
+      getID('_scores').innerHTML = ''
 
       const scores = json.result as number[]
 
@@ -23,20 +21,20 @@ function refresh(gameID: string) {
             </td>
           </tr>`
 
-        g('_scores').appendChild(template.content.firstChild)
+        getID('_scores').appendChild(template.content.firstChild)
       }
     })
 }
 
-g('refresh').addEventListener('click', () => {
+getID('refresh').addEventListener('click', async () => {
   if (localStorage.getItem('gameID') !== null) {
-    refresh(localStorage.getItem('gameID'))
+    await refresh(localStorage.getItem('gameID'))
   }
 })
 
-function init() {
+const init = async () => {
   if (localStorage.getItem('gameID') == null) {
-    fetch(
+    await fetch(
       'https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/',
       {
         method: 'POST',
@@ -56,12 +54,12 @@ function init() {
         localStorage.setItem('gameID', slug)
       })
   } else {
-    refresh(localStorage.getItem('gameID'))
+    await refresh(localStorage.getItem('gameID'))
   }
 
-  g('sub_btn').addEventListener('click', (event) => {
+  getID('sub_btn').addEventListener('click', async (event) => {
     event.preventDefault()
-    const form = new FormData(g('_form') as HTMLFormElement)
+    const form = new FormData(getID('_form') as HTMLFormElement)
     const formData = {}
 
     const entries = form.entries()
@@ -71,7 +69,7 @@ function init() {
       formData[key] = value
     })
 
-    fetch(
+    await fetch(
       `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${localStorage.getItem('gameID')}/scores/`, {
       method: 'POST',
       body: JSON.stringify(formData),
