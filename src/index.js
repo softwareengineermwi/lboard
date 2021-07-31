@@ -1,16 +1,7 @@
-const __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-  function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-  return new (P || (P = Promise))(function (resolve, reject) {
-    function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-    function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-    function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-    step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-};
 const getID = (e) => document.getElementById(e);
-const refresh = (gameID) => __awaiter(this, void 0, void 0, function* () {
+const refresh = async (gameID) => {
   const baseUrl = `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${gameID}/scores/`;
-  yield fetch(baseUrl)
+  await fetch(baseUrl)
     .then((response) => response.json())
     .then((json) => {
       getID('_scores').innerHTML = '';
@@ -29,15 +20,15 @@ const refresh = (gameID) => __awaiter(this, void 0, void 0, function* () {
         getID('_scores').appendChild(template.content.firstChild);
       }
     });
-});
-getID('refresh').addEventListener('click', () => __awaiter(this, void 0, void 0, function* () {
+};
+getID('refresh').addEventListener('click', async () => {
   if (localStorage.getItem('gameID') !== null) {
-    yield refresh(localStorage.getItem('gameID'));
+    await refresh(localStorage.getItem('gameID'));
   }
-}));
-const init = () => __awaiter(this, void 0, void 0, function* () {
+});
+const init = async () => {
   if (localStorage.getItem('gameID') == null) {
-    yield fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/', {
+    await fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/', {
       method: 'POST',
       body: JSON.stringify({
         name: 'FooBar',
@@ -54,9 +45,9 @@ const init = () => __awaiter(this, void 0, void 0, function* () {
       });
   }
   else {
-    yield refresh(localStorage.getItem('gameID'));
+    await refresh(localStorage.getItem('gameID'));
   }
-  getID('sub_btn').addEventListener('click', (event) => __awaiter(this, void 0, void 0, function* () {
+  getID('sub_btn').addEventListener('click', async (event) => {
     event.preventDefault();
     const form = new FormData(getID('_form'));
     const formData = {};
@@ -65,7 +56,7 @@ const init = () => __awaiter(this, void 0, void 0, function* () {
       const [key, value] = pair;
       formData[key] = value;
     });
-    yield fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${localStorage.getItem('gameID')}/scores/`, {
+    await fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${localStorage.getItem('gameID')}/scores/`, {
       method: 'POST',
       body: JSON.stringify(formData),
       headers: {
@@ -73,6 +64,6 @@ const init = () => __awaiter(this, void 0, void 0, function* () {
       },
     })
       .then((response) => response.json());
-  }));
-});
+  });
+};
 init();
