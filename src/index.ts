@@ -59,15 +59,10 @@ const init = async () => {
 
   getID('sub_btn').addEventListener('click', async (event) => {
     event.preventDefault()
-    const form = new FormData(getID('_form') as HTMLFormElement)
-    const formData = {}
+    const formData: any = {}
 
-    const entries = form.entries()
-
-    entries.forEach((pair: [any, any]) => {
-      const [key, value] = pair
-      formData[key] = value
-    })
+    formData.user = (getID('user') as HTMLInputElement).value
+    formData.score = (getID('score') as HTMLInputElement).value
 
     await fetch(
       `https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${localStorage.getItem('gameID')}/scores/`, {
