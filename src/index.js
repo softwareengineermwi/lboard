@@ -43,8 +43,7 @@ const init = async () => {
         const slug = str.substr(13, 21);
         localStorage.setItem('gameID', slug);
       });
-  }
-  else {
+  } else {
     await refresh(localStorage.getItem('gameID'));
   }
   getID('sub_btn').addEventListener('click', async (event) => {
